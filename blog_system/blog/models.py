@@ -10,14 +10,20 @@ class User(AbstractUser):
 
 
 class Post(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     content = models.TextField()
-    created_date = models.DateTimeField(defauld=datetime.datetime.now)
+    created_at = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
 
 
-class Commentary(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+class Comment(models.Model):
+    content = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    created_time = models.DateTimeField(default=datetime.datetime.now)
-    content = models.TextField()
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Comment by {self.owner.username} on {self.post.title}"
