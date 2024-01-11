@@ -7,12 +7,12 @@ from .models import Post, User, Commentary
 class IndexView(ListView):
     model = Post
     template_name = 'index.html'
-    paginate_by = 5
+    paginate_by = 2
     context_object_name = 'posts'
 
 
 class PostDetailView(DetailView):
     model = Post
-    template_name = 'post_detail_view.html'
+    template_name = 'post_detail.html'
     context_object_name = 'post'
 
