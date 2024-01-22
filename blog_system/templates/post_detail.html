@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+    <p>Author: {{ post.owner.username }}</p>
+    <p>Comments: {{ post.commentary_set.count }}</p>
+
+    {% for comment in post.commentary_set.all %}
+        <div class="card mb-2">
+            <div class="card-body">
+                <p class="card-text"><b>{{ comment.user.username }}</b>: {{ comment.content }}</p>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+     <div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title text-center">Add new comment</h3>
+          <form method="POST" enctype="multipart/form-data" action="{% url 'blog:comment-create' post.id %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <textarea class="form-control" id="commentContent" name="content" rows="3" required placeholder="Write commentary here"></textarea>
+            </div>
+            {% if user.is_authenticated %}
+              <button type="submit" class="btn btn-primary btn-block">Send</button>
+            {% else %}
+              <button type="submit" class="btn btn-primary btn-block" disabled>Send</button>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  {% endblock %}

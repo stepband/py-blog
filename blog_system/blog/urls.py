@@ -1,6 +1,7 @@
+from django.contrib.auth.views import LoginView
 from django.urls import path
 
-from .views import PostDetailView, IndexView
+from .views import PostDetailView, IndexView, CommentCreateView
 
 app_name = 'blog'
 
@@ -15,9 +16,9 @@ urlpatterns = [
         name='post-detail'
         ),
     path(
-        'posts/<int:pk>/',
-        PostDetailView.as_view(),
-        name='post-detail'
-        )
-]
+        "posts/<int:pk>/comment/create/",
+        CommentCreateView.as_view(),
+        name="comment-create"
+    ),
+   ]
 
